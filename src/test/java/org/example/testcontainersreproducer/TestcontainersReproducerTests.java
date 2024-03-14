@@ -30,7 +30,7 @@ class TestcontainersReproducerTests {
     @Container
     private BrowserWebDriverContainer<?> chrome = new BrowserWebDriverContainer<>()
             .withCapabilities(new ChromeOptions())
-            .withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.RECORD_ALL, Paths.get("/target").toFile());
+            .withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.RECORD_ALL, Paths.get("target").toFile());
 
     @Test
     void testVnc() {
@@ -48,8 +48,6 @@ class TestcontainersReproducerTests {
         driver.close();
 
         driver.switchTo().window(originalWindow);
-
-        driver.quit();
     }
 
     static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
