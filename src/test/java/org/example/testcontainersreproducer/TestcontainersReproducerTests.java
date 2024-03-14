@@ -37,13 +37,17 @@ class TestcontainersReproducerTests {
         RemoteWebDriver driver = new RemoteWebDriver(chrome.getSeleniumAddress(), new ChromeOptions());
         driver.get("http://host.testcontainers.internal:" + port);
 
+        String originalWindow = driver.getWindowHandle();
         driver.findElement(By.ByLinkText.linkText("Open Popup")).click();
-        for (String winHandle : driver.getWindowHandles()) {
-            driver.switchTo().window(winHandle);
+        for (String windowHandle : driver.getWindowHandles()) {
+            if(!originalWindow.contentEquals(windowHandle)) {
+                driver.switchTo().window(windowHandle);
+                break;
+            }
         }
         driver.close();
 
-        driver.switchTo().defaultContent();
+        driver.switchTo().window(originalWindow);
 
         driver.quit();
     }
